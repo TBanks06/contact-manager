@@ -1,6 +1,19 @@
 import React from 'react'
+import { 
+    Outlet, 
+    Link, 
+    useRouteLoaderData, 
+    Form 
+} from 'react-router-dom'
+import { getContact, createContact } from '../Contact';
+
+export async function loader() {
+    const contacts = await getContacts();
+    return { contacts};
+}
 
 export default function Root ()  {
+    const {contacts } = useLoaderData();
   return (
     <>
     <div id='sidebar'>
@@ -28,20 +41,38 @@ export default function Root ()  {
                 </div>
                 </form>
 
-                <form method="post">
+                <Form method="post">
                     <button type="submit">New</button>
-                </form>
+                </Form>
             </div>
 
             <nav>
-                <ul>
-                    <li><a href={'/contacts/1'}>Your Name</a></li>
-                    <li><a href={'/contacts/2'}>Your Friend</a></li>
-                </ul>
+            {contacts.length ? (
+            <ul>
+              {contacts.map((contact) => (
+                <li key={contact.id}>
+                  <Link to={`contacts/${contact.id}`}>
+                    {contact.first || contact.last ? (
+                      <>
+                        {contact.first} {contact.last}
+                      </>
+                    ) : (
+                      <i>No Name</i>
+                    )}{" "}
+                    {contact.favorite && <span>★</span>}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>
+              <i>No contacts</i>
+            </p>
+          )}
             </nav>
 
             <div id='detail'>
-
+                <Outlet />
             </div>
     </div>
     </>
