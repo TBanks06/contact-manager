@@ -5,7 +5,7 @@ import {
     useRouteLoaderData, 
     Form 
 } from 'react-router-dom'
-import { getContact, createContact } from '../Contact';
+import { getContact, createContact } from '../contacts';
 
 export async function action() {
     const contact = await createContact();
