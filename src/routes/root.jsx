@@ -1,8 +1,8 @@
 import React from 'react'
 import { 
     Outlet,
-    NavLink 
-    Link, 
+    NavLink, 
+    useNavigation, 
     useRouteLoaderData, 
     Form,
     redirect,
@@ -17,6 +17,7 @@ export async function action() {
 
 export default function Root ()  {
     const {contacts } = useLoaderData();
+    const navigation = useNavigation();
   return (
     <>
     <div id='sidebar'>
@@ -83,10 +84,15 @@ export default function Root ()  {
           )}
             </nav>
 
-            <div id='detail'>
+    </div>
+            <div 
+                id='detail'
+                className={
+                    navigation.state === 'loading' ? 'loading' : ''
+                }
+            >
                 <Outlet />
             </div>
-    </div>
     </>
   );
 }
