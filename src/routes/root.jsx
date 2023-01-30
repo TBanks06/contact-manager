@@ -24,7 +24,7 @@ export async function action() {
 }
 
 export default function Root ()  {
-    const {contacts } = useLoaderData();
+    const {contacts, q } = useLoaderData();
     const navigation = useNavigation();
   return (
     <>
@@ -35,6 +35,7 @@ export default function Root ()  {
                     <input type="search" 
                             name="q" 
                             id="q"
+                            defaultValue={q}
                             placeholder='Search'
                             aria-label='Search contacts'
                            
