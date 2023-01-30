@@ -7,8 +7,16 @@ import {
     Form,
     redirect,
 } from 'react-router-dom'
-import { getContact, createContact } from '../contacts';
+import { getContact, createContact, getContacts } from '../contacts';
 
+export async function loader({request}) {
+    const url = new URL(request.url)
+    const q = url.searchParams.get('q')
+    const contacts = await getContacts(q)
+    return {
+        contacts
+    }
+}
 
 export async function action() {
     const contact = await createContact();
@@ -23,12 +31,13 @@ export default function Root ()  {
     <div id='sidebar'>
             <h1>React Router Contacts</h1>
             <div>
-                <form id="search-form" role="search">
+                <Form id="search-form" role="search">
                     <input type="search" 
                             name="q" 
                             id="q"
                             placeholder='Search'
                             aria-label='Search contacts'
+                           
                             />
 
                 <div 
@@ -43,7 +52,7 @@ export default function Root ()  {
                     aria-live='polite'
                 >
                 </div>
-                </form>
+                </Form>
 
                 <Form method="post">
                     <button type="submit">New</button>
