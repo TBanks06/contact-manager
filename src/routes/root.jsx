@@ -14,7 +14,7 @@ export async function loader({request}) {
     const q = url.searchParams.get('q')
     const contacts = await getContacts(q)
     return {
-        contacts
+        contacts, q
     }
 }
 
