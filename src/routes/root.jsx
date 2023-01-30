@@ -7,9 +7,9 @@ import {
 } from 'react-router-dom'
 import { getContact, createContact } from '../Contact';
 
-export async function loader() {
-    const contacts = await getContacts();
-    return { contacts};
+export async function action() {
+    const contact = await createContact();
+    return { contact};
 }
 
 export default function Root ()  {

@@ -1,6 +1,13 @@
-import {Form} from 'react-router-dom'
+import {Form, userLoaderData} from 'react-router-dom'
+import {getContact} from '../Contact'
+
+export async function loader({params}) {
+    return getContact(params.contactId)
+}
+
 
 export default function Contact() {
+    const contact = userLoaderData()
     const contact ={
         first: "Tunji",
         last: "Bankole",
